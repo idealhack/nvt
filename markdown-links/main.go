@@ -93,6 +93,9 @@ func addTitleToLink(url string) (result string, err error) {
 	return
 }
 
+// fuctions below forked from
+// https://siongui.github.io/2016/05/10/go-get-html-title-via-net-html/
+
 func fetchTitleOfURL(url string) (title string, err error) {
 	resp, err := http.Get(url)
 	if err != nil {
