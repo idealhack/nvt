@@ -121,10 +121,8 @@ func getHTMLTitle(r io.Reader) (string, bool) {
 }
 
 func traverse(n *html.Node) (string, bool) {
-	if isTitleElement(n) {
-		if n.FirstChild != nil {
-			return n.FirstChild.Data, true
-		}
+	if isTitleElement(n) && n.FirstChild != nil {
+		return n.FirstChild.Data, true
 	}
 
 	for c := n.FirstChild; c != nil; c = c.NextSibling {
