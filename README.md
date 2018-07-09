@@ -1,6 +1,6 @@
-# wiki-tools
+# nvALT-tools
 
-⚒ tools for wiki
+⚒ tools for nvALT
 
 ## title-fetcher
 
