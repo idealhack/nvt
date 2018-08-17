@@ -12,6 +12,7 @@ import (
 	"github.com/russross/blackfriday"
 )
 
+// Note is a text file has title and link
 type Note struct {
 	Title string
 	Link  string

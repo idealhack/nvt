@@ -7,6 +7,7 @@ import (
 	"github.com/alecthomas/template"
 )
 
+// Index is a list of note titles and links
 type Index struct {
 	Title string
 	Notes []Note
