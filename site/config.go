@@ -36,7 +36,7 @@ func SetConfig(wd string) {
 	viper.ReadConfig(bytes.NewBuffer(config))
 	siteTitle = viper.GetString("title")
 
-	NotesDirectory = filepath.Join(wd, "wiki")
+	NotesDirectory = filepath.Join(wd, "notes")
 	publicDirectory = filepath.Join(wd, "public")
 	staticDirectory = filepath.Join(wd, "static")
 	indexTemplate = filepath.Join(wd, "theme", "index.html")
