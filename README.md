@@ -1,11 +1,19 @@
-# nvALT-tools
+# nvt
 
-⚒ tools for nvALT
+⚒ nvALT tools
 
-## title-fetcher
+```
+Usage:
+  nvt [flags]
+  nvt [command]
 
-This program take markdown files and add title to plain links, i.e. turn `https://example.com` to `[Example Domain](https://example.com/)`. It works best when the links are articles in utf-8 encoding.
+Available Commands:
+  help        Help about any command
+  site        Takes nvALT notes files and generates a static wiki-like website
+  title       Takes markdown files and add title to plain links
 
-## site-generator
+Flags:
+  -h, --help   help for nvt
 
-site-generator takes nvALT notes files and generates a static wiki-like website.
+Use "nvt [command] --help" for more information about a command.
+```
