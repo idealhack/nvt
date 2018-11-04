@@ -1,14 +1,13 @@
-package main
+package cmd
 
 import (
-	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
-	"os"
 	"strings"
 
+	"github.com/spf13/cobra"
 	"golang.org/x/net/html"
 )
 
@@ -19,18 +18,20 @@ const (
 	httpsLinkIndicator  = "https://"
 )
 
-func main() {
-	fmt.Printf("This program take markdown files and add title to plain links,\n")
-	fmt.Printf("i.e. turn `https://example.com` to `[Example Domain](https://example.com/)`.\n")
-	fmt.Printf("It works best when the links are articles in utf-8 encoding.\n")
-	if len(os.Args) < 2 {
-		fmt.Fprintf(os.Stderr, "Usage:\n\t%s [files]\n", os.Args[0])
-		os.Exit(1)
-	}
+func init() {
+	rootCmd.AddCommand(titleCmd)
+}
 
-	for _, arg := range os.Args[1:] {
-		processFile(arg)
-	}
+var titleCmd = &cobra.Command{
+	Use:   "title",
+	Short: "Takes markdown files and add title to plain links",
+	Long: `Turn https://example.com to [Example Domain](https://example.com/)
+It works best when the links are articles in utf-8 encoding.`,
+	Run: func(cmd *cobra.Command, args []string) {
+		for _, arg := range args {
+			processFile(arg)
+		}
+	},
 }
 
 func processFile(filename string) {

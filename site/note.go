@@ -1,4 +1,4 @@
-package main
+package site
 
 import (
 	"fmt"
@@ -18,9 +18,10 @@ type Note struct {
 	Link  string
 }
 
-func processNotes(path string) {
+// ProcessNotes ...
+func ProcessNotes(path string) {
 	files, err := ioutil.ReadDir(path)
-	check(err)
+	Check(err)
 
 	sortByModTime(files)
 
@@ -53,18 +54,18 @@ func isMarkdownFile(filename string) bool {
 
 func processNote(path, filename string) {
 	markdownBytes, err := ioutil.ReadFile(filepath.Join(path, filename))
-	check(err)
+	Check(err)
 
 	noteTitle := strings.TrimSuffix(filename, noteExtenstion)
 	htmlContent := parseMarkdown(markdownBytes)
 
 	htmlPath := filepath.Join(publicDirectory, replaceSpaceWithDash(noteTitle))
 	err = os.MkdirAll(htmlPath, os.ModePerm)
-	check(err)
+	Check(err)
 
 	htmlFile := filepath.Join(htmlPath, htmlFileName)
 	err = ioutil.WriteFile(htmlFile, htmlContent, 0644)
-	check(err)
+	Check(err)
 }
 
 // parseMarkdown parse Markdown to HTML

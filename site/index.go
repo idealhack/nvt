@@ -1,4 +1,4 @@
-package main
+package site
 
 import (
 	"os"
@@ -15,7 +15,7 @@ type Index struct {
 
 func processIndex(path string, notes []Note) {
 	t, err := template.ParseFiles(indexTemplate)
-	check(err)
+	Check(err)
 
 	indexData := Index{
 		Title: siteTitle,
@@ -23,8 +23,8 @@ func processIndex(path string, notes []Note) {
 	}
 
 	indexFile, err := os.Create(filepath.Join(publicDirectory, htmlFileName))
-	check(err)
+	Check(err)
 
 	err = t.Execute(indexFile, indexData)
-	check(err)
+	Check(err)
 }
