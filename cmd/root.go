@@ -11,7 +11,7 @@ var rootCmd = &cobra.Command{
 	Use:   "nvt",
 	Short: "nvALT tools",
 	Run: func(cmd *cobra.Command, args []string) {
-		// ...
+		cmd.Help()
 	},
 }
 
