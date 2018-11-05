@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/idealhack/nvt/site"
+
 	"github.com/spf13/cobra"
 )
 
