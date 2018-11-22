@@ -11,6 +11,8 @@ import (
 )
 
 const (
+	lineBreak           = "\n"
+	filePermission      = 0644
 	codeIndicator       = "    "
 	titledLinkIndicator = "](http"
 	httpLinkIndicator   = "http://"
@@ -24,12 +26,12 @@ func ProcessFile(filename string) {
 		log.Fatal(err)
 	}
 
-	lines := strings.Split(string(bytes), "\n")
+	lines := strings.Split(string(bytes), lineBreak)
 	for i, line := range lines {
 		lines[i] = processLine(line)
 	}
-	result := strings.Join(lines, "\n")
-	err = ioutil.WriteFile(filename, []byte(result), 0644)
+	result := strings.Join(lines, lineBreak)
+	err = ioutil.WriteFile(filename, []byte(result), filePermission)
 	if err != nil {
 		log.Fatal(err)
 	}
