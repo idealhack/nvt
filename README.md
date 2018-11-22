@@ -2,7 +2,15 @@
 
 ⚒ nvALT tools
 
+## Install
+
+```shell
+go get -u github.com/idealhack/nvt
 ```
+
+## Usage
+
+```shell
 Usage:
   nvt [flags]
   nvt [command]
