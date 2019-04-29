@@ -3,8 +3,7 @@ package site
 import (
 	"os"
 	"path/filepath"
-
-	"github.com/alecthomas/template"
+	"text/template"
 )
 
 // Index is a list of note titles and links

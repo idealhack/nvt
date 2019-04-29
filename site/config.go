@@ -24,6 +24,7 @@ var (
 	publicDirectory string
 	staticDirectory string
 	indexTemplate   string
+	noteTemplate    string
 )
 
 // SetConfig ...
@@ -41,6 +42,7 @@ func SetConfig(wd string) {
 	publicDirectory = filepath.Join(wd, "public")
 	staticDirectory = filepath.Join(wd, "static")
 	indexTemplate = filepath.Join(wd, "theme", "index.html")
+	noteTemplate = filepath.Join(wd, "theme", "note.html")
 }
 
 // Check ...

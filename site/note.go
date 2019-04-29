@@ -1,6 +1,7 @@
 package site
 
 import (
+	"bytes"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -8,14 +9,16 @@ import (
 	"regexp"
 	"sort"
 	"strings"
+	"text/template"
 
 	"github.com/russross/blackfriday"
 )
 
-// Note is a text file has title and link
+// Note is a text file has title and path
 type Note struct {
-	Title string
-	Link  string
+	Title   string
+	Path    string
+	Content string
 }
 
 // ProcessNotes ...
@@ -35,7 +38,7 @@ func ProcessNotes(path string) {
 
 		noteTitle := strings.TrimSuffix(f.Name(), noteExtenstion)
 
-		note := Note{Title: noteTitle, Link: replaceSpaceWithDash(noteTitle)}
+		note := Note{Title: noteTitle, Path: replaceSpaceWithDash(noteTitle)}
 		notes = append(notes, note)
 	}
 
@@ -57,7 +60,13 @@ func processNote(path, filename string) {
 	Check(err)
 
 	noteTitle := strings.TrimSuffix(filename, noteExtenstion)
-	htmlContent := parseMarkdown(markdownBytes)
+	noteContent := parseMarkdown(markdownBytes)
+
+	note := Note{
+		Title:   fmt.Sprintf("%s • %s", noteTitle, siteTitle),
+		Content: fmt.Sprintf("%s", noteContent),
+	}
+	htmlContent := renderNote(note)
 
 	htmlPath := filepath.Join(publicDirectory, replaceSpaceWithDash(noteTitle))
 	err = os.MkdirAll(htmlPath, os.ModePerm)
@@ -66,6 +75,17 @@ func processNote(path, filename string) {
 	htmlFile := filepath.Join(htmlPath, htmlFileName)
 	err = ioutil.WriteFile(htmlFile, htmlContent, 0644)
 	Check(err)
+}
+
+func renderNote(note Note) []byte {
+	t, err := template.ParseFiles(noteTemplate)
+	Check(err)
+
+	var noteContent bytes.Buffer
+	err = t.Execute(&noteContent, note)
+	Check(err)
+
+	return noteContent.Bytes()
 }
 
 // parseMarkdown parse Markdown to HTML
