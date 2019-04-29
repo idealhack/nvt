@@ -33,7 +33,8 @@ func SetConfig(wd string) {
 	config, err := ioutil.ReadFile(configFile)
 	Check(err)
 
-	viper.ReadConfig(bytes.NewBuffer(config))
+	err = viper.ReadConfig(bytes.NewBuffer(config))
+	Check(err)
 	siteTitle = viper.GetString("title")
 
 	NotesDirectory = filepath.Join(wd, "notes")
