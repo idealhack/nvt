@@ -36,9 +36,9 @@ func ProcessNotes(path string) {
 
 		processNote(path, f.Name())
 
-		noteTitle := strings.TrimSuffix(f.Name(), noteExtenstion)
+		noteTitle := generateTitleFromPath(strings.TrimSuffix(f.Name(), noteExtenstion))
 
-		note := Note{Title: noteTitle, Path: replaceSpaceWithDash(noteTitle)}
+		note := Note{Title: noteTitle, Path: generateURLPathFromTitle(noteTitle)}
 		notes = append(notes, note)
 	}
 
@@ -68,7 +68,7 @@ func processNote(path, filename string) {
 	}
 	htmlContent := renderNote(note)
 
-	htmlPath := filepath.Join(publicDirectory, replaceSpaceWithDash(noteTitle))
+	htmlPath := filepath.Join(publicDirectory, generateURLPathFromTitle(noteTitle))
 	err = os.MkdirAll(htmlPath, os.ModePerm)
 	Check(err)
 
@@ -99,10 +99,19 @@ func parseMarkdown(markdown []byte) []byte {
 // convertWikiLink converts `[[Link]]` to `[Link](../Link/)`
 func convertWikiLink(link string) string {
 	title := link[2 : len(link)-2]
-	return fmt.Sprintf("[%s](../%s/)", title, replaceSpaceWithDash(title))
+	return fmt.Sprintf("[%s](../%s/)", title, generateURLPathFromTitle(title))
 }
 
-// replaceSpaceWithDash turns `internal link` to `internal-link`
-func replaceSpaceWithDash(s string) string {
-	return strings.Replace(s, " ", "-", -1)
+// generateTitleFromPath returns the correct title of a note from its path
+func generateTitleFromPath(s string) string {
+	s = strings.Replace(s, ":", "/", -1)
+	return s
+}
+
+// generateURLPathFromTitle returns the URL path of a note from its title
+func generateURLPathFromTitle(s string) string {
+	s = strings.Replace(s, " ", "-", -1)
+	s = strings.Replace(s, ":", "-", -1)
+	s = strings.Replace(s, "/", "-", -1)
+	return s
 }
